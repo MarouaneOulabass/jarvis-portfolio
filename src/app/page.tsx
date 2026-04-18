@@ -25,13 +25,13 @@ const AIOrb = dynamic(() => import('@/components/AIOrb'), {
 });
 
 const CLIENT_ZONE_ID = 'jarvis-client-zone';
-const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
-
 interface Vec2 {
   x: number;
   y: number;
 }
 
+// Concentric rings: 1 center + 6 in ring 1 + 12 in ring 2 + ...
+// Cards placed with even angular spacing per ring, tiny rotation per odd ring.
 function constellationPos(
   i: number,
   total: number,
@@ -39,14 +39,56 @@ function constellationPos(
   maxH: number,
 ): Vec2 {
   if (total === 0) return { x: 0, y: 0 };
-  const t = (i + 1) / (total + 0.5);
-  const maxRadius = Math.min(maxW * 0.42, maxH * 0.46);
-  const radius = Math.sqrt(t) * maxRadius;
-  const angle = i * GOLDEN_ANGLE - Math.PI / 2;
-  return {
-    x: Math.cos(angle) * radius,
-    y: Math.sin(angle) * radius * 0.8,
-  };
+
+  // Build ring plan
+  const shells: number[] = [];
+  let remaining = total;
+  if (remaining > 0) {
+    const center = Math.min(1, remaining);
+    shells.push(center);
+    remaining -= center;
+  }
+  let shellIdx = 0;
+  while (remaining > 0) {
+    shellIdx++;
+    const capacity = 6 * shellIdx;
+    const count = Math.min(capacity, remaining);
+    shells.push(count);
+    remaining -= count;
+  }
+
+  // Compute ring step so cards don't overlap. Cards ~210×180.
+  const cardStep = Math.max(220, Math.min(260, maxW / 6));
+  const verticalSquish = maxH / maxW < 0.55 ? 0.68 : 0.88;
+  const ringCount = Math.max(1, shells.length - 1);
+
+  // Cap step so the outermost ring fits inside zone (account for card height ~180)
+  const cardHalf = 95;
+  const maxStepByHeight = Math.max(
+    120,
+    (maxH / 2 - cardHalf) / (ringCount * verticalSquish),
+  );
+  const maxStepByWidth = Math.max(120, (maxW / 2 - 120) / ringCount);
+  const step = Math.min(cardStep, maxStepByHeight, maxStepByWidth);
+
+  let accum = 0;
+  for (let s = 0; s < shells.length; s++) {
+    const size = shells[s];
+    if (i < accum + size) {
+      const indexInShell = i - accum;
+      const radius = s * step;
+      if (s === 0) return { x: 0, y: 0 };
+      const rotation = s % 2 === 0 ? 0 : Math.PI / size;
+      const angle =
+        (indexInShell / size) * Math.PI * 2 + rotation - Math.PI / 2;
+      return {
+        x: Math.cos(angle) * radius,
+        y: Math.sin(angle) * radius * verticalSquish,
+      };
+    }
+    accum += size;
+  }
+  return { x: 0, y: 0 };
 }
 
 export default function JarvisPortal() {
@@ -805,7 +847,7 @@ export default function JarvisPortal() {
                 <span className="text-gray-800">•</span>
                 <span>Glisser sur cible → pitch</span>
                 <span className="text-gray-800">•</span>
-                <span>Maintenir → sélectionner</span>
+                <span>Maintenir / Clic-droit → sélectionner</span>
               </div>
             </motion.div>
           )}

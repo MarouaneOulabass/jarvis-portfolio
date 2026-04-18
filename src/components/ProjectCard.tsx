@@ -252,6 +252,14 @@ export default function ProjectCard({
     }
   };
 
+  const handleContextMenu = (e: React.MouseEvent) => {
+    if (!onToggleSelect) return;
+    e.preventDefault();
+    e.stopPropagation();
+    playSound('tap');
+    onToggleSelect(project.id);
+  };
+
   useEffect(() => () => clearLongPress(), []);
 
   const color = statusColor[project.status] || statusColor.development;
@@ -279,6 +287,7 @@ export default function ProjectCard({
       onTapStart={handleTapStart}
       onTapCancel={handleTapCancel}
       onTap={handleTap}
+      onContextMenu={handleContextMenu}
       style={{
         x,
         y,
@@ -302,7 +311,7 @@ export default function ProjectCard({
         filter: { duration: 0.4 },
       }}
       className={`glass-card select-none cursor-grab active:cursor-grabbing ${
-        isFocused ? 'w-[min(680px,90vw)] p-6' : 'w-[280px] p-4'
+        isFocused ? 'w-[min(680px,90vw)] p-6' : 'w-[210px] p-3'
       } ${isSelected ? 'ring-2 ring-jarvis-green/60 shadow-[0_0_25px_rgba(109,179,63,0.35)]' : ''}`}
     >
       {/* Selection badge */}
