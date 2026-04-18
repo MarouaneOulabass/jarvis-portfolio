@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="70%">
+      <stop offset="0%" stop-color="#0a0a18"/>
+      <stop offset="100%" stop-color="#06060a"/>
+    </radialGradient>
+    <radialGradient id="orb" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+      <stop offset="25%" stop-color="#4AAFD5" stop-opacity="0.95"/>
+      <stop offset="70%" stop-color="#4AAFD5" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#4AAFD5" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4AAFD5" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#4AAFD5" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#4AAFD5" stroke-width="0.5" stroke-opacity="0.1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <circle cx="600" cy="260" r="280" fill="url(#halo)"/>
+  <circle cx="600" cy="260" r="120" fill="url(#orb)"/>
+  <circle cx="600" cy="260" r="160" fill="none" stroke="#4AAFD5" stroke-width="1" stroke-opacity="0.4"/>
+  <circle cx="600" cy="260" r="200" fill="none" stroke="#6DB33F" stroke-width="0.8" stroke-opacity="0.25"/>
+  <circle cx="600" cy="260" r="240" fill="none" stroke="#4AAFD5" stroke-width="0.5" stroke-opacity="0.15"/>
+  <g fill="#4AAFD5" font-family="Orbitron, sans-serif">
+    <text x="600" y="480" font-size="82" font-weight="800" text-anchor="middle" letter-spacing="18">J.A.R.V.I.S</text>
+  </g>
+  <g fill="#888" font-family="Orbitron, sans-serif">
+    <text x="600" y="520" font-size="20" text-anchor="middle" letter-spacing="8">JUST A RATHER VERY INTELLIGENT SYSTEM</text>
+  </g>
+  <g fill="#4AAFD5" font-family="JetBrains Mono, monospace">
+    <text x="600" y="570" font-size="22" text-anchor="middle" letter-spacing="3">Marouane Oulabass · Full-Stack &amp; Data Engineer</text>
+  </g>
+  <g stroke="#4AAFD5" stroke-width="1" fill="none">
+    <path d="M 60 60 L 60 30 L 90 30"/>
+    <path d="M 1140 60 L 1140 30 L 1110 30"/>
+    <path d="M 60 570 L 60 600 L 90 600"/>
+    <path d="M 1140 570 L 1140 600 L 1110 600"/>
+  </g>
+  <g stroke="#6DB33F" stroke-opacity="0.5" stroke-width="1" fill="none">
+    <circle cx="200" cy="300" r="3" fill="#6DB33F"/>
+    <circle cx="1000" cy="200" r="3" fill="#6DB33F"/>
+    <circle cx="150" cy="480" r="3" fill="#4AAFD5"/>
+    <circle cx="1050" cy="450" r="3" fill="#4AAFD5"/>
+  </g>
+</svg>
